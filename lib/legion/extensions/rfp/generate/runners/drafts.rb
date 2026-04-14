@@ -42,8 +42,9 @@ module Legion
             private
 
             def parse_rfp(text)
-              parser = Legion::Extensions::Rfp::Ingest::Runners::Parser
-              parsed = parser.parse_rfp_questions(text: text)
+              obj = Object.new
+              obj.extend(Legion::Extensions::Rfp::Ingest::Runners::Parser)
+              parsed = obj.parse_rfp_questions(text: text)
               parsed[:result]
             end
 
@@ -55,8 +56,8 @@ module Legion
             end
 
             def build_prompt(question:, context:, retrieved:)
-              parts = ["You are an expert proposal writer for a healthcare organization."]
-              parts << "Use the following reference material to craft your response:"
+              parts = ['You are an expert proposal writer for a healthcare organization.']
+              parts << 'Use the following reference material to craft your response:'
 
               retrieved.each_with_index do |doc, idx|
                 parts << "\n--- Reference #{idx + 1} ---\n#{doc[:content] || doc['content']}"
@@ -69,7 +70,7 @@ module Legion
             end
 
             def build_revision_prompt(question:, previous:, feedback:, context:)
-              parts = ["You are revising an RFP response based on reviewer feedback."]
+              parts = ['You are revising an RFP response based on reviewer feedback.']
               parts << "\nOriginal question: #{question}"
               parts << "\nPrevious answer:\n#{previous}"
               parts << "\nReviewer feedback: #{feedback}"
@@ -78,7 +79,7 @@ module Legion
               parts.join("\n")
             end
 
-            def call_llm(prompt:, model:)
+            def call_llm(prompt:, model: nil) # rubocop:disable Lint/UnusedMethodArgument
               if defined?(Legion::LLM)
                 result = Legion::LLM.ask(message: prompt)
                 result.is_a?(Hash) ? (result[:content] || result[:result] || result.to_s) : result.to_s

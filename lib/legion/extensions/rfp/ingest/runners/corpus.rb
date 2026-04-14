@@ -9,12 +9,11 @@ module Legion
             extend Legion::Extensions::Rfp::Ingest::Helpers::Client
 
             def ingest_document(file_path:, tags: [], metadata: {}, **)
-              docs = Legion::Extensions::Rfp::Ingest::Runners::Documents
-              supported = docs.supported?(file_path: file_path)
+              supported = supported?(file_path: file_path)
               return { result: nil, error: "Unsupported format: #{file_path}" } unless supported[:result]
 
-              extracted = docs.extract_text(file_path: file_path)
-              chunked = docs.chunk_text(text: extracted[:result])
+              extracted = extract_text(file_path: file_path)
+              chunked = chunk_text(text: extracted[:result])
 
               ingested = chunked[:result].map.with_index do |chunk, idx|
                 {
@@ -34,8 +33,7 @@ module Legion
               files = Dir.glob(pattern).select { |f| ::File.file?(f) }
 
               results = files.filter_map do |file_path|
-                docs = Legion::Extensions::Rfp::Ingest::Runners::Documents
-                next unless docs.supported?(file_path: file_path)[:result]
+                next unless supported?(file_path: file_path)[:result]
 
                 ingest_document(file_path: file_path, tags: tags)
               end

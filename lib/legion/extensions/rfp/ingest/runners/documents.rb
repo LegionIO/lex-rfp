@@ -21,7 +21,7 @@ module Legion
                         when 'pdf'      then extract_pdf(file_path)
                         when 'docx'     then extract_docx(file_path)
                         when 'md', 'markdown' then ::File.read(file_path)
-                        when 'xlsx'     then extract_xlsx(file_path)
+                        when 'xlsx' then extract_xlsx(file_path)
                         when 'html', 'htm' then extract_html(file_path)
                         else raise ArgumentError, "Unsupported format: #{fmt}"
                         end

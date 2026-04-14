@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Legion::Extensions::Rfp::Generate::Runners::Drafts do
-  let(:test_class) { Class.new { include Legion::Extensions::Rfp::Generate::Runners::Drafts } }
+  let(:test_class) do
+    Class.new do
+      include Legion::Extensions::Rfp::Generate::Runners::Sections
+      include Legion::Extensions::Rfp::Generate::Runners::Drafts
+    end
+  end
   let(:instance) { test_class.new }
 
   describe '#generate_response' do

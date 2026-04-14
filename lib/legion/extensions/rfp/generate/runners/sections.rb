@@ -11,7 +11,7 @@ module Legion
             def generate_section_response(question:, section: nil, context: {}, model: nil, scope: :all, **)
               retrieved = retrieve_section_context(question: question, section: section, scope: scope)
               prompt = build_section_prompt(question: question, section: section, context: context,
-                                           retrieved: retrieved)
+                                            retrieved: retrieved)
 
               answer = call_section_llm(prompt: prompt, model: model)
               {
@@ -45,7 +45,7 @@ module Legion
             end
 
             def build_section_prompt(question:, section:, context:, retrieved:)
-              parts = ["You are writing a specific section of an RFP response."]
+              parts = ['You are writing a specific section of an RFP response.']
               parts << "Section: #{section}" if section
 
               retrieved.each_with_index do |doc, idx|
@@ -59,7 +59,7 @@ module Legion
             end
 
             def build_executive_summary_prompt(rfp_text:, company_context:)
-              parts = ["Write an executive summary for the following RFP response."]
+              parts = ['Write an executive summary for the following RFP response.']
               parts << "\nCompany context: #{company_context.inspect}" unless company_context.empty?
               parts << "\nRFP overview:\n#{rfp_text[0..2000]}"
               parts << "\nWrite a compelling 2-3 paragraph executive summary."
@@ -67,7 +67,7 @@ module Legion
             end
 
             def build_compliance_prompt(requirements:, capabilities:)
-              parts = ["Generate a compliance matrix for the following requirements."]
+              parts = ['Generate a compliance matrix for the following requirements.']
               parts << "\nCapabilities: #{capabilities.inspect}" unless capabilities.empty?
 
               requirements.each_with_index do |req, idx|
@@ -78,7 +78,7 @@ module Legion
               parts.join("\n")
             end
 
-            def call_section_llm(prompt:, model:)
+            def call_section_llm(prompt:, model: nil) # rubocop:disable Lint/UnusedMethodArgument
               if defined?(Legion::LLM)
                 result = Legion::LLM.ask(message: prompt)
                 result.is_a?(Hash) ? (result[:content] || result[:result] || result.to_s) : result.to_s

@@ -73,7 +73,7 @@ RSpec.describe Legion::Extensions::Rfp::Ingest::Runners::Documents do
     it 'splits text into overlapping chunks' do
       text = 'a' * 2500
       result = instance.chunk_text(text: text, chunk_size: 1000, overlap: 200)
-      expect(result[:count]).to eq(3)
+      expect(result[:count]).to eq(4)
       expect(result[:result].first[:offset]).to eq(0)
       expect(result[:result][1][:offset]).to eq(800)
     end

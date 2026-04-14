@@ -52,9 +52,9 @@ module Legion
 
               {
                 result: {
-                  ready:           all_approved,
-                  total_sections:  sections.length,
-                  approved:        sections.count { |s| s[:status] == :approved },
+                  ready:            all_approved,
+                  total_sections:   sections.length,
+                  approved:         sections.count { |s| s[:status] == :approved },
                   pending_sections: pending.map { |s| s[:name] }
                 }
               }

@@ -23,9 +23,7 @@ module Legion
             def record_outcome(proposal_id:, outcome:, revenue: nil, feedback: nil, **)
               valid_outcomes = %i[won lost no_decision pending]
               outcome_sym = outcome.to_sym
-              unless valid_outcomes.include?(outcome_sym)
-                return { result: nil, error: "Invalid outcome: #{outcome}. Valid: #{valid_outcomes.join(', ')}" }
-              end
+              return { result: nil, error: "Invalid outcome: #{outcome}. Valid: #{valid_outcomes.join(', ')}" } unless valid_outcomes.include?(outcome_sym)
 
               {
                 result: {
@@ -70,11 +68,11 @@ module Legion
 
               {
                 result: {
-                  count:   times.length,
-                  avg:     (times.sum / times.length).round(2),
-                  min:     times.min.round(2),
-                  max:     times.max.round(2),
-                  median:  times.sort[times.length / 2].round(2)
+                  count:  times.length,
+                  avg:    (times.sum / times.length).round(2),
+                  min:    times.min.round(2),
+                  max:    times.max.round(2),
+                  median: times.sort[times.length / 2].round(2)
                 }
               }
             end

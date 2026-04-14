@@ -18,10 +18,10 @@ module Legion
 
                 if stripped.match?(/\A(?:section|part|category)\s+/i) || stripped.match?(/\A[A-Z][A-Z\s]{2,}[A-Z]\z/)
                   current_section = stripped
-                elsif stripped.match?(/\A\d+[\.\)]\s/) || stripped.match?(/\A[a-z][\.\)]\s/i)
+                elsif stripped.match?(/\A\d+[.)]\s/) || stripped.match?(/\A[a-z][.)]\s/i)
                   questions << {
                     section:  current_section,
-                    question: stripped.sub(/\A[\da-z][\.\)]\s*/i, ''),
+                    question: stripped.sub(/\A[\da-z][.)]\s*/i, ''),
                     raw:      stripped
                   }
                 end
@@ -56,9 +56,7 @@ module Legion
               text.each_line do |line|
                 stripped = line.strip
                 if stripped.match?(/\A(?:#{section_heading_pattern})/)
-                  if current_title
-                    sections << { title: current_title, content: current_content.join("\n").strip }
-                  end
+                  sections << { title: current_title, content: current_content.join("\n").strip } if current_title
                   current_title = stripped
                   current_content = []
                 else

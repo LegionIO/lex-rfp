@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'tempfile'
+require 'tmpdir'
+require 'fileutils'
 require 'legion/extensions/rfp'
 
 RSpec.configure do |config|

@@ -9,7 +9,9 @@ Gem::Specification.new do |spec|
   spec.email         = ['matthewdiverson@gmail.com']
 
   spec.summary       = 'LEX Rfp'
-  spec.description   = 'Generative AI-powered RFP and proposal automation for LegionIO. Ingests past proposals and product docs into Apollo, generates draft responses via LLM pipeline with RAG, and provides human-in-the-loop review workflows with analytics.'
+  spec.description   = 'Generative AI-powered RFP and proposal automation for LegionIO. ' \
+                       'Ingests past proposals into Apollo, generates draft responses via LLM pipeline with RAG, ' \
+                       'and provides human-in-the-loop review workflows with analytics.'
   spec.homepage      = 'https://github.com/LegionIO/lex-rfp'
   spec.license       = 'MIT'
   spec.required_ruby_version = '>= 3.4'

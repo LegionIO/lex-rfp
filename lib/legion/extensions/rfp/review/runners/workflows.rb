@@ -29,26 +29,22 @@ module Legion
 
             def update_status(workflow_id:, status:, **)
               status_sym = status.to_sym
-              unless STATUSES.include?(status_sym)
-                return { result: nil, error: "Invalid status: #{status}. Valid: #{STATUSES.join(', ')}" }
-              end
+              return { result: nil, error: "Invalid status: #{status}. Valid: #{STATUSES.join(', ')}" } unless STATUSES.include?(status_sym)
 
               { result: { id: workflow_id, status: status_sym, updated_at: Time.now.iso8601 } }
             end
 
             def update_section_status(workflow_id:, section_name:, status:, reviewer: nil, **)
               status_sym = status.to_sym
-              unless STATUSES.include?(status_sym)
-                return { result: nil, error: "Invalid status: #{status}" }
-              end
+              return { result: nil, error: "Invalid status: #{status}" } unless STATUSES.include?(status_sym)
 
               {
                 result: {
-                  workflow_id:  workflow_id,
-                  section:      section_name,
-                  status:       status_sym,
-                  reviewer:     reviewer,
-                  updated_at:   Time.now.iso8601
+                  workflow_id: workflow_id,
+                  section:     section_name,
+                  status:      status_sym,
+                  reviewer:    reviewer,
+                  updated_at:  Time.now.iso8601
                 }
               }
             end
@@ -56,9 +52,9 @@ module Legion
             def submit_for_review(workflow_id:, reviewers:, **)
               {
                 result: {
-                  workflow_id: workflow_id,
-                  status:      :in_review,
-                  reviewers:   reviewers,
+                  workflow_id:  workflow_id,
+                  status:       :in_review,
+                  reviewers:    reviewers,
                   submitted_at: Time.now.iso8601
                 }
               }

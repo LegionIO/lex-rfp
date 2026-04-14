@@ -11,7 +11,7 @@ module Legion
             DEFAULT_TEMPLATES = {
               standard:   { sections: %i[executive_summary company_overview approach timeline pricing], tone: :formal },
               government: { sections: %i[executive_summary compliance technical_approach management staffing pricing],
-                            tone: :formal },
+                            tone:     :formal },
               healthcare: { sections: %i[executive_summary clinical_approach quality_measures compliance network
                                          implementation pricing], tone: :formal }
             }.freeze

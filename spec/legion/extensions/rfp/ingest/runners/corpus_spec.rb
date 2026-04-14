@@ -1,19 +1,24 @@
 # frozen_string_literal: true
 
 RSpec.describe Legion::Extensions::Rfp::Ingest::Runners::Corpus do
-  let(:test_class) { Class.new { include Legion::Extensions::Rfp::Ingest::Runners::Corpus } }
+  let(:test_class) do
+    Class.new do
+      include Legion::Extensions::Rfp::Ingest::Runners::Documents
+      include Legion::Extensions::Rfp::Ingest::Runners::Corpus
+    end
+  end
   let(:instance) { test_class.new }
 
   describe '#ingest_document' do
     it 'ingests a supported document and returns chunks' do
       tmpfile = Tempfile.new(['proposal', '.md'])
-      tmpfile.write('# RFP Response\n\n' + ('Content paragraph. ' * 100))
+      tmpfile.write("# RFP Response\\n\\n#{'Content paragraph. ' * 100}")
       tmpfile.close
 
-      result = instance.ingest_document(file_path: tmpfile.path, tags: ['rfp', 'test'])
+      result = instance.ingest_document(file_path: tmpfile.path, tags: %w[rfp test])
       expect(result[:count]).to be_positive
       expect(result[:source]).to eq(tmpfile.path)
-      expect(result[:result].first[:tags]).to eq(['rfp', 'test'])
+      expect(result[:result].first[:tags]).to eq(%w[rfp test])
     ensure
       tmpfile&.unlink
     end

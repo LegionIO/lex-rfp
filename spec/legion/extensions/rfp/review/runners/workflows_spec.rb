@@ -32,9 +32,9 @@ RSpec.describe Legion::Extensions::Rfp::Review::Runners::Workflows do
 
   describe '#submit_for_review' do
     it 'submits workflow for review' do
-      result = instance.submit_for_review(workflow_id: 'wf-1', reviewers: ['rev-1', 'rev-2'])
+      result = instance.submit_for_review(workflow_id: 'wf-1', reviewers: %w[rev-1 rev-2])
       expect(result[:result][:status]).to eq(:in_review)
-      expect(result[:result][:reviewers]).to eq(['rev-1', 'rev-2'])
+      expect(result[:result][:reviewers]).to eq(%w[rev-1 rev-2])
     end
   end
 
